@@ -1,0 +1,31 @@
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4 text-warning fw-bold">Cadastrar usuário</h2>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="card p-3" style="background-color: aliceblue;">
+      <form (ngSubmit)="salvar()">
+        <div *ngIf="mensagem" class="alert alert-danger">{{ mensagem }}</div>
+        <div class="col-12">
+          <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="nome" [(ngModel)]="dados.nome" name="nome" class="form-control" id="nome" required (input)="limparMensagem()"/>
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" [(ngModel)]="dados.email" name="email" class="form-control" id="email" required (input)="limparMensagem()"/>
+        </div>
+        </div>
+        <div class="col-12">
+          <div class="mb-3">
+          <label for="password" class="form-label">Senha</label>
+          <input type="password" [(ngModel)]="dados.senha" name="senha" class="form-control" id="password" required (input)="limparMensagem()"/>
+        </div>
+        </div>
+        <button type="submit" (click)="validacao()" class="btn btn-warning">Cadastrar</button><br>
+        
+    </div>
+      </form>
+    </div>
+  </div>
+</div>

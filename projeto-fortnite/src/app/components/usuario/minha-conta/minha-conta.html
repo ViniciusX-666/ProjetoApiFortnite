@@ -1,0 +1,115 @@
+
+<div class="container mt-5 mb-5">
+  <h2 class="text-center mb-4 text-warning fw-bold">Minha Conta</h2>
+  <div class="card card-shadow p-4 bg-dark text-light border-0">
+    <div class="row g-4">
+        <!-- <p>{{dados|json}}</p> -->
+        <div class="container mt-3 mb-3" *ngFor="let dado of dados?.dados">
+            <div class="row">
+                <div class="col-3">
+                    <p><strong>Nome:</strong> {{ dado.nome }}</p>
+                    <p><strong>Email:</strong> {{ dado.email }}</p>
+                    <p><strong>V-Bucks:</strong> {{ dado.vbucks }}</p>
+                    <p><strong>Senha:</strong> {{ dado.senha }}</p>
+                </div>
+                <div class="col-9">
+                <h4>Meus itens</h4>
+                <div class="row">
+                    <div *ngIf="dados?.meusItens?.length > 0; else semItens" class="row">
+                        <div class="col-4  text-center justify-content-center" *ngFor="let item of dados?.meusItens">
+                            <div class="card">
+                            <p>Data de registro: {{item.dataRegistro | date:'dd/MM/yyyy'}}</p>
+                            <img [src]="item.imagem" class="card-img-top mt-2" alt="{{ item.name }}"/>
+                            <h5>{{item.name}}</h5>
+                            <button class="btn text-white mt-2" style="background-color: #FF6F00; border-color: #FF6F00;"  
+                                (click)="modalDevolverItem(item);$event.stopPropagation()">Devolver
+                            </button>
+                        </div>
+                    </div>
+                    
+                    </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+
+      </div>
+    </div>
+</div>
+
+<ng-template #semItens>
+    <div class="text-center text-white mt-4">
+        <p>Nenhum item encontrado no momento.</p>      
+        <button routerLink="/" class="btn text-white mt-2" style="background-color: #FF6F00; border-color: #FF6F00;">
+          Comprar
+        </button>
+      </div>
+      
+  </ng-template>
+
+<!-- Modal para comprar o item -->
+<div class="modal fade show" *ngIf="tipoModal=='devolver-item'" tabindex="-1" [ngClass]="{ 'd-block': mostrarModal }" [style.background]="'rgba(0,0,0,0.5)'">  
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmação</h5>
+          <button type="button" class="btn-close" (click)="fecharModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p>{{ mensagemModal }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="fecharModal()">Não</button>
+          <button type="button" class="btn btn-primary" (click)="confirmarDevolucao()">Sim</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal carregando -->
+  <div class="modal fade show" *ngIf="tipoModal === 'carregando'" tabindex="-1" [ngClass]="{ 'd-block': mostrarModal }" [style.background]="'rgba(0,0,0,0.5)'">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center p-4">
+        <div class="modal-body">
+          <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+          <h5 class="mt-3">Carregando...</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal de sucesso -->
+  <div class="modal fade show" 
+    *ngIf="tipoModal === 'sucesso'" tabindex="-1" [ngClass]="{ 'd-block': mostrarModal }" [style.background]="'rgba(0,0,0,0.5)'">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center p-4">
+        <div class="modal-body">        
+          <div class="text-success mb-3">
+            <i class="bi bi-check-circle-fill" style="font-size: 3rem;"></i>
+          </div>        
+          <h5 class="fw-bold">{{ mensagemModal || 'Operação realizada com sucesso!' }}</h5>        
+          <button class="btn btn-success mt-4" (click)="fecharModal()">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal de erro -->
+  <div  class="modal fade show"  *ngIf="tipoModal === 'erro'"  tabindex="-1" [ngClass]="{ 'd-block': mostrarModal }" [style.background]="'rgba(0,0,0,0.5)'">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center p-4">
+        <div class="modal-body">        
+          <div class="text-danger mb-3">
+            <i class="bi bi-x-circle-fill" style="font-size: 3rem;"></i>
+          </div>
+          <h5 class="fw-bold">{{ mensagemModal || 'Ocorreu um erro inesperado!' }}</h5>
+          <button class="btn btn-danger mt-4" (click)="fecharModal()">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

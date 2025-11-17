@@ -1,0 +1,75 @@
+<div class="container">    
+  </div>
+  <div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4 text-warning fw-bold">Usuários</h2>
+    <div class="card card-shadow p-4 bg-dark text-light border-0">
+      <div class="row g-4">
+        <div class="card card-shadow p-3">
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                  <span>Nome</span>
+                  <input type="text" class="form-control" placeholder="Filtrar por nome"
+                         [(ngModel)]="filtros.nome" (keyup.enter)="filtrar()">
+                </div>
+              
+                <div class="col-md-2 d-flex align-items-end">
+                  <button class="btn btn-primary w-100" (click)="filtrar()">Buscar</button>
+                </div>
+              
+                <div class="col-md-2 d-flex align-items-end">
+                  <button class="btn btn-success w-100" routerLink="/usuario/cadastrar">Cadastrar</button>
+                </div>
+              </div>
+              
+          
+            <table class="table table-striped table-bordered text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Senha</th>
+                </tr>
+              </thead>
+          
+              <tbody>
+                <tr *ngFor="let u of usuarios">
+                  <td>{{ u.id }}</td>
+                  <td>{{ u.nome }}</td>
+                  <td>{{ u.email }}</td>
+                  <td>{{ u.senha }}</td>                  
+                </tr>
+              
+                <tr *ngIf="usuarios.length == 0">
+                  <td colspan="4" class="text-center text-muted py-3">
+                    Nenhum usuário no momento
+                  </td>
+                </tr>
+              </tbody>
+              
+            </table>
+          
+            <nav class="d-flex justify-content-between" *ngIf="totalPaginas > 1">
+              <button class="btn btn-outline-secondary"
+                      (click)="paginaAnterior()"
+                      [disabled]="filtros.pagina === 1">
+                « Anterior
+              </button>
+          
+              <span class="align-self-center fw-bold">
+                Página {{ filtros.pagina }} / {{ totalPaginas }}
+              </span>
+          
+              <button class="btn btn-outline-secondary"
+                      (click)="proximaPagina()"
+                      [disabled]="filtros.pagina === totalPaginas">
+                Próxima »
+              </button>
+            </nav>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  

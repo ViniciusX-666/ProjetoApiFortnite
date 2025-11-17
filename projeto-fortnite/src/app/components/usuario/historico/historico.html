@@ -1,0 +1,120 @@
+<div class="container">    
+    <div class="container mt-5 mb-5">
+    <h2 class="text-center mb-4 text-warning fw-bold">Histórico de compra e devolução</h2>
+    <div class="card card-shadow p-4 bg-dark text-light border-0">
+        
+        <ul class="nav nav-tabs mb-3" id="historicoTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="compras-tab" data-bs-toggle="tab" data-bs-target="#compras" type="button" role="tab" aria-controls="compras" aria-selected="true">
+              Histórico de Compras
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="devolucao-tab" data-bs-toggle="tab" data-bs-target="#devolucao" type="button" role="tab" aria-controls="devolucao" aria-selected="false">
+              Histórico de Devolução
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content" id="historicoTabsContent">
+          <div class="tab-pane fade show active" id="compras" role="tabpanel" aria-labelledby="compras-tab">
+            <div class="p-3">
+              <!-- Conteúdo futuro -->
+              <h5 class="text-warning">Histórico de Compras</h5>
+              <table class="table table-striped table-bordered text-center">
+                <thead class="table-dark">
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>data de Registro</th>                    
+                  </tr>
+                </thead>
+            
+                <tbody>
+                  <tr *ngFor="let hc of dadosHistoricoCompra">
+                    <td>{{ hc.idItem }}</td>
+                    <td>{{ hc.name }}</td>
+                    <td>{{ hc.dataRegistro | date:'dd/MM/yyyy' }}</td>
+                  </tr>
+                
+                  <tr *ngIf="dadosHistoricoCompra.length == 0">
+                    <td colspan="4" class="text-center text-muted py-3">
+                      Nenhum item no momento
+                    </td>
+                  </tr>
+                </tbody>
+                
+              </table>
+              <nav class="d-flex justify-content-between" *ngIf="totalPaginas > 1">
+                <button class="btn btn-outline-secondary"
+                        (click)="paginaAnterior()"
+                        [disabled]="filtros.pagina === 1">
+                  « Anterior
+                </button>
+            
+                <span class="align-self-center fw-bold">
+                  Página {{ filtros.pagina }} / {{ totalPaginas }}
+                </span>
+            
+                <button class="btn btn-outline-secondary"
+                        (click)="proximaPagina()"
+                        [disabled]="filtros.pagina === totalPaginas">
+                  Próxima »
+                </button>
+              </nav>
+              
+            </div>
+          </div>
+      
+          <!-- Tab Devolução -->
+          <div class="tab-pane fade" id="devolucao" role="tabpanel" aria-labelledby="devolucao-tab">
+            <div class="p-3">
+              <!-- Conteúdo futuro -->
+              <h5 class="text-info">Histórico de Devolução</h5>
+              <table class="table table-striped table-bordered text-center">
+                <thead class="table-dark">
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>data de Registro</th>                    
+                  </tr>
+                </thead>
+            
+                <tbody>
+                  <tr *ngFor="let hc of dadosHistoricoDevolucao">
+                    <td>{{ hc.idItem }}</td>
+                    <td>{{ hc.name }}</td>
+                    <td>{{ hc.dataRegistro | date:'dd/MM/yyyy' }}</td>
+                  </tr>
+                
+                  <tr *ngIf="dadosHistoricoDevolucao.length == 0">
+                    <td colspan="4" class="text-center text-muted py-3">
+                      Nenhum item no momento
+                    </td>
+                  </tr>
+                </tbody>
+                
+              </table>
+              <nav class="d-flex justify-content-between" *ngIf="totalPaginas > 1">
+                <button class="btn btn-outline-secondary"
+                        (click)="paginaAnterior()"
+                        [disabled]="filtros.pagina === 1">
+                  « Anterior
+                </button>
+            
+                <span class="align-self-center fw-bold">
+                  Página {{ filtros.pagina }} / {{ totalPaginas }}
+                </span>
+            
+                <button class="btn btn-outline-secondary"
+                        (click)="proximaPagina()"
+                        [disabled]="filtros.pagina === totalPaginas">
+                  Próxima »
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+      
+</div>

@@ -1,0 +1,12 @@
+.footer {
+  font-size: 0.9rem;
+}
+
+.footer a:hover {
+  color: #ff6f00;
+  text-decoration: underline;
+}
+
+.footer .text-warning {
+  color: #ff6f00 !important;
+}
