@@ -1,0 +1,68 @@
+services:
+  # Banco de dados MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: fortnite-mysql
+    environment:
+      PORT: 3000
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: fortnite
+      DB_PASSWORD: 123456
+      DB_DATABASE: fortniteprojeto
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - fortnite-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Node.js
+  backend:
+    build:
+      context: ./fortnite-backend
+      dockerfile: Dockerfile
+    container_name: fortnite-backend
+    environment:
+      PORT: 3000
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: 123456
+      DB_DATABASE: fortniteprojeto
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - fortnite-network
+    volumes:
+      - ./fortnite-backend:/app
+      - /app/node_modules
+
+  # Frontend Angular
+  frontend:
+    build:
+      context: ./projeto-fortnite
+      dockerfile: Dockerfile
+    container_name: fortnite-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - fortnite-network
+
+networks:
+  fortnite-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+
